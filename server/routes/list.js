@@ -10,7 +10,7 @@ function listSingleGif ({ AWS_ID, AWS_SECRET, AWS_S3_BUCKET }) {
   return async function handler (req, res, marker, objs = []) {
     let listResponse
     try {
-      listResponse = await client.listObjects({ Bucket: AWS_S3_BUCKET }).promise()
+      listResponse = await client.listObjects({ Bucket: AWS_S3_BUCKET, Marker: marker }).promise()
     } catch (err) {
       console.warn('Error retrieving listObjects from s3.', err)
       res.send({ error: 'Error retrieving gif from service.', code: 500 })
