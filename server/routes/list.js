@@ -1,17 +1,16 @@
 
-const S3 = require('aws-sdk/clients/s3');
+const S3 = require('aws-sdk/clients/s3')
 
 function listSingleGif ({ AWS_ID, AWS_SECRET, AWS_S3_BUCKET }) {
   const client = new S3({
     accessKeyId: AWS_ID,
     secretAccessKey: AWS_SECRET
   })
-  
+
   return async function handler (req, res, marker, objs = []) {
-    
     let listResponse
     try {
-      listResponse = await client.listObjects({ Bucket: AWS_S3_BUCKET}).promise()
+      listResponse = await client.listObjects({ Bucket: AWS_S3_BUCKET }).promise()
     } catch (err) {
       console.warn('Error retrieving listObjects from s3.', err)
       res.send({ error: 'Error retrieving gif from service.', code: 500 })
@@ -21,7 +20,7 @@ function listSingleGif ({ AWS_ID, AWS_SECRET, AWS_S3_BUCKET }) {
       .concat(objs)
 
     if (listResponse.IsTruncated) {
-      return await handler(req, res, listResponse.Marker, onlyGifs)
+      return handler(req, res, listResponse.Marker, onlyGifs)
     }
 
     const gifUrls = onlyGifs.map(x => `https://s3.amazonaws.com/${AWS_S3_BUCKET}/${x.Key}`)
@@ -31,9 +30,7 @@ function listSingleGif ({ AWS_ID, AWS_SECRET, AWS_S3_BUCKET }) {
 }
 
 function listAllGifs ({ AWS_ID, AWS_SECRET }) {
-  return (req, res) => {
-    
-  }
+  return (req, res) => {}
 }
 
-module.exports = { listAllGifs, listSingleGif };
+module.exports = { listAllGifs, listSingleGif }
