@@ -1,0 +1,23 @@
+{
+  "name": "giffer-server",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "lint": "standard --verbose | snazzy",
+    "lint.fix": "standard --fix",
+    "start": "node server/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.94.0",
+    "dotenv": "^4.0.0",
+    "env": "0.0.2",
+    "express": "^4.15.3"
+  },
+  "devDependencies": {
+    "snazzy": "^7.0.0",
+    "standard": "^10.0.2"
+  }
+}
